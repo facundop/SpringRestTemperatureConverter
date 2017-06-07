@@ -1,48 +1,37 @@
-package com.facundoprecentado.temperatureconverter;
+package com.facundoprecentado.temperatureconverter.controller;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.facundoprecentado.temperatureconverter.model.Celsius;
 import com.facundoprecentado.temperatureconverter.model.Fahrenheit;
 import com.facundoprecentado.temperatureconverter.model.Kelvin;
 import com.facundoprecentado.temperatureconverter.model.Temperature;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GreetingController {
+public class TemperatureController {
 
-    private Temperature t;
-    private Celsius c;
-    private Kelvin k;
-    private Fahrenheit f;
+	private Temperature temperature;
 
-    @RequestMapping("/fromC/{c}")
-    public
-    @ResponseBody
-    Temperature fromC(@PathVariable("c") Double v, Model model) {
-        c = new Celsius(v);
-        t = new Temperature(c);
-        return t;
-    }
+	@PostMapping("/celsius/")
+	public ResponseEntity<Temperature> fromCelsius(@RequestBody Celsius value) {
+		temperature = new Temperature(value);
+		return new ResponseEntity<Temperature>(temperature, HttpStatus.OK);
+	}
 
-    @RequestMapping("/fromF/{f}")
-    public
-    @ResponseBody
-    Temperature fromF(@PathVariable("f") Double v, Model model) {
-        f = new Fahrenheit(v);
-        t = new Temperature(f);
-        return t;
-    }
+	@PostMapping("/fahrenheit/")
+	public ResponseEntity<Temperature> fromFahrenheit(@RequestBody Fahrenheit value) {
+		temperature = new Temperature(value);
+		return new ResponseEntity<Temperature>(temperature, HttpStatus.OK);
+	}
 
-    @RequestMapping("/fromK/{k}")
-    public
-    @ResponseBody
-    Temperature fromK(@PathVariable("k") Double v, Model model) {
-        k = new Kelvin(v);
-        t = new Temperature(k);
-        return t;
-    }
+	@PostMapping("/kelvin/")
+	public ResponseEntity<Temperature> fromKelvin(@RequestBody Kelvin value) {
+		temperature = new Temperature(value);
+		return new ResponseEntity<Temperature>(temperature, HttpStatus.OK);
+	}
 
 }
